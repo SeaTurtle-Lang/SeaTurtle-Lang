@@ -1,1 +1,1 @@
-gcc src/main.c -o build/main.o && ./build/main.o
+gcc src/main.c -o build/main.o && ./build/main.o $1

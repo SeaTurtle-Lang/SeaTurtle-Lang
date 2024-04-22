@@ -1,20 +1,19 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#include "reader.c"
+#include "errors.c"
 
-#define SRC_FILE "examples/main.st"
+int main(int argc, char** argv) {
+    if (argc != 2) {
+        file_not_specified_error(argc);
+    }
 
-bool file_exists(char file_path[]) {
-    FILE* fptr;
+    char* SRC_FILE = argv[1];
 
-    fptr = fopen(file_path, "r");
-    
-    return (fptr != NULL);
-}
-
-int main() {
     bool src_file_exists = file_exists(SRC_FILE);
+    if (src_file_exists == 1) {
+        file_does_not_exist_error(SRC_FILE);
+    }
 
-    printf("%d\n", src_file_exists);
+    printf("%s\n", get_file_contents(SRC_FILE));
     return 0;
 }
