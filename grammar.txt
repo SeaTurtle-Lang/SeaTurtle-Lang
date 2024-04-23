@@ -1,2 +1,3 @@
-Standard IO Operations:
-    io.o(message ${variable} \${escaped})
+Assigning variables:
+    value => variable_name;
+    variable_1 => variable_2;

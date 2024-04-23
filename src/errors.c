@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 void file_not_specified_error(int argc) {
     printf("Fatal error: no file specified\n\tExpected argument count: 2\n\tGot argument count: %d\n", argc);
     exit(1);

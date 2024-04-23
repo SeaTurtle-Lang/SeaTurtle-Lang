@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "splits.h": "c",
+        "stdlib.h": "c",
+        "consts.h": "c",
+        "string.h": "c",
+        "ctype.h": "c",
+        "token.h": "c"
+    }
+}
