@@ -15,4 +15,6 @@
 #define LPAREN  14 // (
 #define RPAREN  15 // )
 #define INT_LIT 16 // 123456789
-#define UNK     17 // Unknown token
+#define LABEL   17 // Anything alphanumeric
+#define STRING  18 // " and '
+#define UNK     19 // Unknown token

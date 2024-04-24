@@ -17,22 +17,12 @@ struct bool_file {
 struct token {
     int token;
     int offset;
-    char* value;
 };
 
-struct token tk_valueless_init(int token, int offset) {
+struct token tk_init(int token, int offset) {
     struct token result;
     result.token = token;
     result.offset = offset;
-    result.value = "";
-    return result;
-}
-
-struct token tk_init(int token, int offset, char* value) {
-    struct token result;
-    result.token = token;
-    result.offset = offset;
-    result.value = value;
     return result;
 }
 
