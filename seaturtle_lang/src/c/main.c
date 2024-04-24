@@ -3,6 +3,9 @@
 #include "errors.c"
 #include "syntax/lexer.c"
 
+extern void parse(char* contents, struct token tokens[], int len);
+// extern void hello_from_rust();
+
 void run_checks(int argc, char** argv) {
     if (argc != 2) {
         file_not_specified_error(argc);
@@ -32,20 +35,19 @@ int main(int argc, char** argv) {
     int offset = 0;
 
     int token_count = 0;
-    struct token tokens[STARTING_TOKEN_COUNT];
-    bool initialization_map[STARTING_TOKEN_COUNT] = {false};
 
     while (offset < file_length) {
         struct token tk = lex(contents, file_length, offset);
         offset = tk.offset;
-        tokens[token_count] = tk;
-        initialization_map[token_count] = true;
         token_count++;
     }
 
+    struct token tokens[token_count];
+
     int curr_offset = 0;
 
-    for (int i = 0; initialization_map[i]; i++) {
+    for (int i = 0; i < token_count; i++) {
+        tokens[i] = lex(contents, file_length, curr_offset);
         struct token curr_token = tokens[i];
         printf("Token Type: %d, Offset: %d, Value: ", curr_token.token, curr_token.offset);
         for (int j = curr_offset; j < curr_token.offset; j++) {
@@ -54,6 +56,9 @@ int main(int argc, char** argv) {
         printf("\n");
         curr_offset = curr_token.offset;
     }
+
+    parse(contents, tokens, token_count);
+    // hello_from_rust();
 
     return 0;
 }
