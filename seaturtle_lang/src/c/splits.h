@@ -14,15 +14,22 @@ struct bool_file {
 #ifndef TOKEN
 #define TOKEN
 
-struct token {
+struct token_idt {
     int token;
     int offset;
+    // char* value;
 };
 
-struct token tk_init(int token, int offset) {
-    struct token result;
+struct token {
+    int token;
+    char* value;
+};
+
+struct token_idt tk_init(int token, int offset) {
+    struct token_idt result;
     result.token = token;
     result.offset = offset;
+    // result.value = "";
     return result;
 }
 

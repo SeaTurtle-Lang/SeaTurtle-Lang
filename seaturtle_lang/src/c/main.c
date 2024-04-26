@@ -3,7 +3,7 @@
 #include "errors.c"
 #include "syntax/lexer.c"
 
-extern void parse(char* contents, struct token tokens[], int len);
+extern struct token* parse(char* contents, struct token_idt tokens[], int len);
 // extern void hello_from_rust();
 
 void run_checks(int argc, char** argv) {
@@ -37,27 +37,27 @@ int main(int argc, char** argv) {
     int token_count = 0;
 
     while (offset < file_length) {
-        struct token tk = lex(contents, file_length, offset);
+        struct token_idt tk = lex(contents, file_length, offset);
         offset = tk.offset;
         token_count++;
     }
 
-    struct token tokens[token_count];
+    struct token_idt tokens[token_count];
 
     int curr_offset = 0;
 
     for (int i = 0; i < token_count; i++) {
         tokens[i] = lex(contents, file_length, curr_offset);
-        struct token curr_token = tokens[i];
-        printf("Token Type: %d, Offset: %d, Value: ", curr_token.token, curr_token.offset);
-        for (int j = curr_offset; j < curr_token.offset; j++) {
-            printf("%c", contents[j]);
-        }
-        printf("\n");
+        struct token_idt curr_token = tokens[i];
         curr_offset = curr_token.offset;
     }
 
-    parse(contents, tokens, token_count);
+    struct token* new_tokens = parse(contents, tokens, token_count);
+    for (int i = 0; i < token_count; i++) {
+        printf("hi %d\n", new_tokens[i].token);
+        // struct token current_token = new_tokens[i];
+        // printf("Token Type: %d, Value: %s", current_token.token, current_token.value);
+    }
     // hello_from_rust();
 
     return 0;

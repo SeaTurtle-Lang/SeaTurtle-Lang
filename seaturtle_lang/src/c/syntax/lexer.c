@@ -6,7 +6,7 @@
 #include "../consts.h"
 #include "../splits.h"
 
-struct token lex(char* contents, int file_length, int offset) {
+struct token_idt lex(char* contents, int file_length, int offset) {
     int token_type = -1;
     int length = 0;
 
@@ -62,6 +62,6 @@ struct token lex(char* contents, int file_length, int offset) {
             return tk_init(UNK, offset+1);
     }
 
-    struct token eof_token = tk_init(TK_EOF, -1);
+    struct token_idt eof_token = tk_init(TK_EOF, -1);
     return eof_token;
 }
