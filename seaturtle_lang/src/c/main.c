@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include "splits.h"
 #include "errors.c"
-#include "syntax/lexer.c"
+#include "consts.h"
+#include "lexer/lexer.c"
 
-extern struct token* parse(char* contents, struct token_idt tokens[], int len);
-// extern void hello_from_rust();
+extern struct token* get_token_values(char* contents, struct token_idt tokens[], int len);
 
 void run_checks(int argc, char** argv) {
     if (argc != 2) {
@@ -33,32 +33,25 @@ int main(int argc, char** argv) {
     // ======== END INITIALIZATION ========
 
     int offset = 0;
-
     int token_count = 0;
+    struct token_idt* tokens;
+
+    tokens = (struct token_idt*) malloc(STARTING_TOKEN_COUNT * sizeof(struct token_idt));
 
     while (offset < file_length) {
         struct token_idt tk = lex(contents, file_length, offset);
+        tokens[token_count] = tk;
+
         offset = tk.offset;
-        token_count++;
+        if (++token_count > STARTING_TOKEN_COUNT) {
+            realloc(tokens, token_count * sizeof(struct token_idt));
+        }        
     }
 
-    struct token_idt tokens[token_count];
-
-    int curr_offset = 0;
-
+    struct token* new_tokens = get_token_values(contents, tokens, token_count);
     for (int i = 0; i < token_count; i++) {
-        tokens[i] = lex(contents, file_length, curr_offset);
-        struct token_idt curr_token = tokens[i];
-        curr_offset = curr_token.offset;
+        printf("%d '%s'\n", new_tokens[i].token, new_tokens[i].value);
     }
-
-    struct token* new_tokens = parse(contents, tokens, token_count);
-    for (int i = 0; i < token_count; i++) {
-        printf("hi %d\n", new_tokens[i].token);
-        // struct token current_token = new_tokens[i];
-        // printf("Token Type: %d, Value: %s", current_token.token, current_token.value);
-    }
-    // hello_from_rust();
 
     return 0;
 }

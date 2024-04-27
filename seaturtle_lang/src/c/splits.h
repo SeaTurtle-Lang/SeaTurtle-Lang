@@ -17,7 +17,6 @@ struct bool_file {
 struct token_idt {
     int token;
     int offset;
-    // char* value;
 };
 
 struct token {
