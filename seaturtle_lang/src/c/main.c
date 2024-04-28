@@ -26,7 +26,9 @@ int main(int argc, char** argv) {
     FILE* fp = fopen(argv[1], "r");
 
     int file_length = get_file_length(fp);
-    char contents[file_length];
+    printf("%d\n", file_length);
+
+    char* contents = malloc(file_length+1);
 
     get_file_contents(fp, contents);
 
@@ -43,15 +45,24 @@ int main(int argc, char** argv) {
         tokens[token_count] = tk;
 
         offset = tk.offset;
-        if (++token_count > STARTING_TOKEN_COUNT) {
-            realloc(tokens, token_count * sizeof(struct token_idt));
-        }        
+        if (++token_count >= STARTING_TOKEN_COUNT) {
+            struct token_idt* ptr = realloc(tokens, (token_count+1) * sizeof(struct token_idt));
+            if (ptr == NULL) {
+                reallocation_error();
+            }
+            tokens = ptr;
+
+        }
     }
 
     struct token* new_tokens = get_token_values(contents, tokens, token_count);
     for (int i = 0; i < token_count; i++) {
         printf("%d '%s'\n", new_tokens[i].token, new_tokens[i].value);
     }
+
+    free(contents);
+    free(tokens);
+    free(new_tokens);
 
     return 0;
 }

@@ -9,3 +9,8 @@ void file_does_not_exist_error(char fp[]) {
     printf("Specified path does not exist\n\tGiven path: %s\n", fp);
     exit(1);
 }
+
+void reallocation_error() {
+    printf("Encountered error trying to realloc");
+    exit(1);
+}

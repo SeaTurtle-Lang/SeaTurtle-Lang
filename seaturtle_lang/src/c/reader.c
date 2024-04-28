@@ -29,6 +29,8 @@ int get_file_length(FILE* fp) {
 char *get_file_contents(FILE* fp, char* text) {
     int file_size = get_file_length(fp);
 
+    printf("FILE SIZE: %d\n", file_size);
+
     fread(text, file_size, 1, fp);
     text[file_size] = 0;
 
